@@ -74,23 +74,7 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 
 ## Importing and exporting remaps
 
-Build remaps as `rehid.json` by clicking **Build this remap**; the generated file is now pretty-printed so it can be read or diffed easily.
-
-- Import by button: click the **Import remap** button next to **Build this remap** and select a `rehid.json` file.
-- Drag-and-drop: drop a `rehid.json` file anywhere on the page — a confirmation dialog will ask whether to import and overwrite the current mappings.
-- Behavior: once you confirm, the app replaces the current mappings with the file’s contents (keys, touch, circle pad, and touch-to-key). Invalid files show an error alert.
-- Supported key tokens: `ZL`, `ZR`, `CSUP`, `CSDOWN`, `CSLEFT`, `CSRIGHT`, along with the standard `ABXYLR+start/select/dpad` names.
-- If the file defines all four `CS*`→D-Pad mappings, the **C-Stick to D-Pad** option (see General Options below) is automatically enabled; otherwise the imported `CS*` mappings remain editable in the buttons list.
-
-## General Options (rehid mode)
-
-The first accordion panel exposes toggles that modify the exported JSON without adding explicit button mappings:
-
-- **C-Pad to D-Pad**: when enabled, the Circle Pad behaves like the D-Pad.
-- **D-Pad to C-Pad**: when enabled, the D-Pad behaves like the Circle Pad. This toggle is mutually exclusive with **C-Pad to D-Pad**.
-- **C-Stick to D-Pad**: when enabled, the four C-Stick directions are written as `CSUP`→`UP`, `CSDOWN`→`DOWN`, `CSLEFT`→`LEFT`, and `CSRIGHT`→`RIGHT` mappings instead of being editable in the button list.
-- **Override Circle Pad Pro**: forces the system to report the Circle Pad Pro accessory even if a game does not detect it natively.
-- **Home Button Remap**: remap `Home` via the button selector.
-
-Use the **Build this remap** button again after changing any toggle to download an updated `rehid.json`.
+- **Build this remap** now emits pretty-printed `rehid.json` files so they are easier to review and share.
+- You can import a `rehid.json` through the **Import remap** button or by drag-and-drop; the app replaces the current mappings (keys, touch, circle pad, touch-to-key) and preserves any custom `CS*` mappings unless the file defines the full C-Stick→D-Pad set.
+- General Options (C-Pad/D-Pad/C-Stick toggles, override Circle Pad Pro, home-button selector) update the exported JSON without additional button entries.
 
