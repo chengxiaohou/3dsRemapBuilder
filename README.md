@@ -71,3 +71,15 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
+
+## Importing remaps (new)
+
+This project now supports importing  remap files and also supports drag-and-drop JSON import across the entire page.
+
+- Import by button: click the **Import remap** button next to **Build this remap** and select a  file.
+- Drag-and-drop: drop a  file anywhere on the page — a confirmation dialog will appear asking whether to import and overwrite the current mappings.
+- Behavior: when you confirm import, the app will replace the current mappings with those defined in the file (keys, touch, cpad, touchtokeys). If the file is invalid you will get an error alert.
+- Supported key tokens: .
+
+Use the existing **Build this remap** button to export the current configuration back to  after editing.
+
