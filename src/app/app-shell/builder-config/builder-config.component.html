@@ -29,6 +29,8 @@
     <div>
         <button class="btn btn-primary" (click)="buildCurrent()" [disabled]="building">Build this remap</button>
         <button class="btn btn-primary" (click)="openModal(qrCode)" *ngIf="rehidMode"><i class="bi bi-grid mr-2"></i>Show as QR code</button>
+        <label class="btn btn-secondary ml-2 mb-1" for="importRemap">Import remap</label>
+        <input id="importRemap" type="file" accept="application/json" (change)="importRemap($event)" style="display:none" />
     </div>
     <ngb-accordion activeIds="buttons">
         <ngb-panel [title]="'General Options'" id="main">
