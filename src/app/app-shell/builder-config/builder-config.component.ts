@@ -44,14 +44,18 @@ export class BuilderConfigComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  private rehidConfigAsString(): string {
+  private serializeRehidConfig(indent?: number): string {
     return JSON.stringify(this.buildRehidConfig(), (k, v) => {
       if ((typeof v === 'boolean' && !v) || (Array.isArray(v) && v.length === 0)) {
         return undefined;
       } else {
         return v;
       }
-    }, 2);
+    }, indent);
+  }
+
+  private rehidConfigAsString(): string {
+    return this.serializeRehidConfig();
   }
 
   private buildRehidConfig(): RehidConfig {
@@ -84,7 +88,7 @@ export class BuilderConfigComponent implements OnInit {
     this.building = true;
     console.log(this.homeButtonCombo.toRehid());
     if (this.rehidMode) {
-      const file = new Blob([this.rehidConfigAsString()], { type: 'application/json;charset=utf-8' });
+      const file = new Blob([this.serializeRehidConfig(2)], { type: 'application/json;charset=utf-8' });
       saveAs(file, 'rehid.json');
       this.building = false;
     }
