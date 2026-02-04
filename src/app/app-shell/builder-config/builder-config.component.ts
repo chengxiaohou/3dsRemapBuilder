@@ -23,6 +23,7 @@ export class BuilderConfigComponent implements OnInit {
   rehidMode = true;
   dpadtocpad = false;
   cpadtodpad = false;
+  csticktodpad = false;
   overridecpadpro = false;
   homeButtonCombo = new Buttons();
 
@@ -50,7 +51,7 @@ export class BuilderConfigComponent implements OnInit {
       } else {
         return v;
       }
-    });
+    }, 2);
   }
 
   private buildRehidConfig(): RehidConfig {
@@ -67,6 +68,9 @@ export class BuilderConfigComponent implements OnInit {
     this.touchToKeyMappings.forEach(m => {
       rehid.touchtokeys.push(new RehidMapping(m.input.toRehid(), m.output.toRehid()));
     });
+    if (this.csticktodpad) {
+      this.buildCStickToDpadMappings(rehid);
+    }
     rehid.cpadtodpad = this.cpadtodpad;
     rehid.dpadtocpad = this.dpadtocpad;
     rehid.overridecpadpro = this.overridecpadpro;
@@ -84,6 +88,25 @@ export class BuilderConfigComponent implements OnInit {
       saveAs(file, 'rehid.json');
       this.building = false;
     }
+  }
+
+  private buildCStickToDpadMappings(rehid: RehidConfig) {
+    const pairs: Array<[string, string]> = [
+      ['csup', 'up'],
+      ['csdown', 'down'],
+      ['csleft', 'left'],
+      ['csright', 'right']
+    ];
+    const existing = new Set(rehid.keys.map(k => `${k.press}=>${k.get}`));
+    pairs.forEach(([from, to]) => {
+      const inB = this.makeButtons([from]);
+      const outB = this.makeButtons([to]);
+      const sig = `${inB.toRehid()}=>${outB.toRehid()}`;
+      if (existing.has(sig)) {
+        return;
+      }
+      rehid.keys.push(new RehidMapping(inB.toRehid(), outB.toRehid()));
+    });
   }
 
   importRemap(event) {
@@ -137,12 +160,25 @@ export class BuilderConfigComponent implements OnInit {
         if (parsed.overridecpadpro !== undefined) { this.overridecpadpro = parsed.overridecpadpro; }
         if (parsed.homebutton) { this.homeButtonCombo = this.buttonsFromRehid(parsed.homebutton); }
 
+        const csSig = new Set(['CSUP=>UP','CSDOWN=>DOWN','CSLEFT=>LEFT','CSRIGHT=>RIGHT']);
+        const csFound: Array<Mapping<Buttons, Buttons>> = [];
+
         const keys = parsed.keys || [];
         keys.forEach(r => {
           const inB = this.buttonsFromRehid(r.press);
           const outB = this.buttonsFromRehid(r.get);
+          const sig = `${inB.toRehid()}=>${outB.toRehid()}`;
+          if (csSig.has(sig)) {
+            csFound.push(new Mapping(inB, outB));
+            return;
+          }
           this.buttonMappings.push(new Mapping(inB, outB));
         });
+
+        this.csticktodpad = csFound.length === csSig.size;
+        if (!this.csticktodpad) {
+          this.buttonMappings.push(...csFound);
+        }
 
         const touch = parsed.touch || [];
         touch.forEach(r => {
@@ -187,6 +223,16 @@ export class BuilderConfigComponent implements OnInit {
         }
       });
     }
+    return b;
+  }
+
+  private makeButtons(keys: string[]): Buttons {
+    const b = new Buttons();
+    keys.forEach(k => {
+      const prop = k.toLowerCase();
+      // @ts-ignore
+      b[prop] = true;
+    });
     return b;
   }
 

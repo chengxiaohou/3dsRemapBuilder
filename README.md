@@ -72,14 +72,25 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
 
-## Importing remaps (new)
+## Importing and exporting remaps
 
-This project now supports importing  remap files and also supports drag-and-drop JSON import across the entire page.
+Build remaps as `rehid.json` by clicking **Build this remap**; the generated file is now pretty-printed so it can be read or diffed easily.
 
-- Import by button: click the **Import remap** button next to **Build this remap** and select a  file.
-- Drag-and-drop: drop a  file anywhere on the page — a confirmation dialog will appear asking whether to import and overwrite the current mappings.
-- Behavior: when you confirm import, the app will replace the current mappings with those defined in the file (keys, touch, cpad, touchtokeys). If the file is invalid you will get an error alert.
-- Supported key tokens: .
+- Import by button: click the **Import remap** button next to **Build this remap** and select a `rehid.json` file.
+- Drag-and-drop: drop a `rehid.json` file anywhere on the page — a confirmation dialog will ask whether to import and overwrite the current mappings.
+- Behavior: once you confirm, the app replaces the current mappings with the file’s contents (keys, touch, circle pad, and touch-to-key). Invalid files show an error alert.
+- Supported key tokens: `ZL`, `ZR`, `CSUP`, `CSDOWN`, `CSLEFT`, `CSRIGHT`, along with the standard `ABXYLR+start/select/dpad` names.
+- If the file defines all four `CS*`→D-Pad mappings, the **C-Stick to D-Pad** option (see General Options below) is automatically enabled; otherwise the imported `CS*` mappings remain editable in the buttons list.
 
-Use the existing **Build this remap** button to export the current configuration back to  after editing.
+## General Options (rehid mode)
+
+The first accordion panel exposes toggles that modify the exported JSON without adding explicit button mappings:
+
+- **C-Pad to D-Pad**: when enabled, the Circle Pad behaves like the D-Pad.
+- **D-Pad to C-Pad**: when enabled, the D-Pad behaves like the Circle Pad. This toggle is mutually exclusive with **C-Pad to D-Pad**.
+- **C-Stick to D-Pad**: when enabled, the four C-Stick directions are written as `CSUP`→`UP`, `CSDOWN`→`DOWN`, `CSLEFT`→`LEFT`, and `CSRIGHT`→`RIGHT` mappings instead of being editable in the button list.
+- **Override Circle Pad Pro**: forces the system to report the Circle Pad Pro accessory even if a game does not detect it natively.
+- **Home Button Remap**: remap `Home` via the button selector.
+
+Use the **Build this remap** button again after changing any toggle to download an updated `rehid.json`.
 

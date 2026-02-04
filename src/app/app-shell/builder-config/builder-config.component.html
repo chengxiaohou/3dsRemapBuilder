@@ -48,6 +48,12 @@
                     </label>
                 </div>
                 <div class="btn-group-toggle">
+                    <b>C-Stick to D-Pad</b>
+                    <label class="btn btn-outline-primary ml-2 mb-1" ngbButtonLabel [ngbTooltip]="'C-Stick will ' + (csticktodpad ? '' : 'not ') + 'behave as the D-Pad'" placement="right">
+                        <input type="checkbox" ngbButton [(ngModel)]="csticktodpad"> {{csticktodpad ? "Enabled" : "Disabled"}}
+                    </label>
+                </div>
+                <div class="btn-group-toggle">
                     <b>Override Circle Pad Pro</b>
                     <label class="btn btn-outline-primary ml-2 mb-1" ngbButtonLabel [ngbTooltip]="'Games will ' + (overridecpadpro ? 'not ' : '') + 'recognize the presence of the Circle Pad Pro'" placement="right">
                         <input type="checkbox" ngbButton [(ngModel)]="overridecpadpro"> {{overridecpadpro ? "Enabled" : "Disabled"}}
