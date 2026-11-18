@@ -1,0 +1,37 @@
+{
+  "keys": [
+    {
+      "press": "ZL",
+      "get": "B"
+    },
+    {
+      "press": "ZR",
+      "get": "A"
+    },
+    {
+      "press": "R+ZR",
+      "get": "START"
+    },
+    {
+      "press": "L+ZL",
+      "get": "SELECT"
+    },
+    {
+      "press": "CSUP",
+      "get": "UP"
+    },
+    {
+      "press": "CSDOWN",
+      "get": "DOWN"
+    },
+    {
+      "press": "CSLEFT",
+      "get": "LEFT"
+    },
+    {
+      "press": "CSRIGHT",
+      "get": "RIGHT"
+    }
+  ],
+  "homebutton": "L+R"
+}
